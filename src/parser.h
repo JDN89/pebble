@@ -1,7 +1,7 @@
 #ifndef pebble_parser_h
 #define pebble_parser_h
 
-#include "scanner.h"
+#include "lexer.h"
 
 #define ERROR_SIZE 256
 typedef struct {
@@ -11,6 +11,8 @@ typedef struct {
   int errorCount;
 } Parser;
 
-void initParser();
+void initParser(const char *source);
+
+void parseSource(char *source);
 
 #endif

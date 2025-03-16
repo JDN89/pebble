@@ -7,12 +7,24 @@
 # ./build.sh run
 
 # Compile command
-gcc -Wall -Wextra -pedantic *.c -o pebble 
+ rm -f pebble  # Remove old executable if it exists
+ gcc -Wall -Wextra -pedantic -g *.c src/*.c -o pebble
 
 # Check CLI argument
 if [[ $1 == "run" ]]; then
     rm -f pebble  # Remove old executable if it exists
-    gcc -Wall -Wextra -pedantic  *.c src/*. -o pebble && ./pebble
+    gcc -Wall -Wextra -pedantic -g *.c src/*.c -o pebble
+
+    if [[ $? -eq 0 ]]; then  # Check if compilation was successful
+        if [[ -n $2 ]]; then
+            ./pebble "$2"
+        else
+            ./pebble
+        fi
+    else
+        echo "Compilation failed."
+        exit 1
+    fi
 fi
 
 if [[ $1 == "test_lexer" ]]; then

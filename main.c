@@ -1,3 +1,4 @@
+#include "src/parser.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -40,14 +41,17 @@ static char *readFile(const char *path) {
 
 static void runFile(const char *path) {
   char *source = readFile(path);
-  // parse source
-  InterpretResult result = interpret(source);
+  parseSource(source);
   free(source);
 
-  if (result == INTERPRET_COMPILE_ERROR)
-    exit(65);
-  if (result == INTERPRET_RUNTIME_ERROR)
-    exit(70);
+  // parse source
+  /*InterpretResult result = interpret(source);*/
+  /*free(source);*/
+  /**/
+  /*if (result == INTERPRET_COMPILE_ERROR)*/
+  /*  exit(65);*/
+  /*if (result == INTERPRET_RUNTIME_ERROR)*/
+  /*  exit(70);*/
 }
 
 int main(int argc, const char *argv[]) {
