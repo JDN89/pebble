@@ -2,13 +2,15 @@
 #include <assert.h>
 #include <stdio.h>
 
-void testLexEOF() {
-  char *source = "+ \n";
+void testLexer() {
+  char *source = " x : int = 5 \n"
+                 "x :: 5 \n"
+                 "x := 5 \n";
 
   TokenType expectedTokens[] = {TOKEN_IDENTIFIER,
                                 TOKEN_COLON,
                                 TOKEN_TYPE_DECLARATION,
-                                TOKEN_EQ,
+                                TOKEN_ASSIGN,
                                 TOKEN_INTEGER,
                                 TOKEN_IDENTIFIER,
                                 TOKEN_CONST_DECLARATION,
@@ -22,10 +24,20 @@ void testLexEOF() {
   for (;;) {
     Token token = nextToken(&lexer);
 
+    if (token.type != expectedTokens[counter]) {
+      fprintf(stderr, "Assertion failed at token[%d]: expected %s, got %s\n",
+              counter, tokenTypeToString(expectedTokens[counter]),
+              tokenTypeToString(token.type));
+    }
+
     assert(token.type == expectedTokens[counter]);
     counter++;
     break;
   }
 }
 
-int main() { printf("done testing lexer\n"); }
+int main() {
+  printf("START testing LEXER\n");
+
+  testLexer();
+}

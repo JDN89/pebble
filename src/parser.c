@@ -20,7 +20,7 @@ void parseSource(char *source) {
 
     Token token = nextToken(&lexer);
 
-    printf("Token Type %s \n", tokenTypeToString(token));
+    printf("Token Type %s \n", tokenTypeToString(token.type));
 
     // NOTE: Bitwise & comparison that compares each bit token.type and compares
     // it to TOKEN EOF

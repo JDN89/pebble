@@ -5,8 +5,6 @@
 
 typedef enum {
   TOKEN_INTEGER = 0,
-  TOKEN_STRING,
-  TOKEN_BOOLEAN,
   TOKEN_EOF,
   TOKEN_TYPE_DECLARATION,
   TOKEN_IDENTIFIER,
@@ -16,16 +14,8 @@ typedef enum {
 
   TOKEN_ILLEGAL,
   // Operators
-  TOKEN_EQ,
-  TOKEN_NOT_EQ,
   TOKEN_ASSIGN,
   TOKEN_PLUS,
-  TOKEN_MINUS,
-  TOKEN_BANG,
-  TOKEN_ASTERISK,
-  TOKEN_SLASH,
-  TOKEN_LT,
-  TOKEN_GT,
 
 } TokenType;
 
@@ -51,7 +41,7 @@ typedef struct Lexer {
   int line;
 } Lexer;
 
-char *tokenTypeToString(Token token);
+char *tokenTypeToString(TokenType type);
 
 Lexer initLexer(const char *source);
 
