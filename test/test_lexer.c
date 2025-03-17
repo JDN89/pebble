@@ -1,23 +1,30 @@
-
-// TODO: for (;;) { Token token = nextToken(); if token.type = EOF break; push
-// the scanned tokens in an array and assert them}
-// write a function,... in your language and see that we output the correct
-// tokens
-//
 #include "../src/lexer.h"
+#include <assert.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 void testLexEOF() {
   char *source = "+ \n";
 
+  TokenType expectedTokens[] = {TOKEN_IDENTIFIER,
+                                TOKEN_COLON,
+                                TOKEN_TYPE_DECLARATION,
+                                TOKEN_EQ,
+                                TOKEN_INTEGER,
+                                TOKEN_IDENTIFIER,
+                                TOKEN_CONST_DECLARATION,
+                                TOKEN_MUT_DECLARATION,
+                                TOKEN_EOF};
+
   Lexer lexer = initLexer(source);
 
-  for (;;) {
-    Token token = nextToken();
+  int counter = 0;
 
-    if (token.type == TOK_EOF)
-      break;
+  for (;;) {
+    Token token = nextToken(&lexer);
+
+    assert(token.type == expectedTokens[counter]);
+    counter++;
+    break;
   }
 }
 

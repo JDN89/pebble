@@ -1,6 +1,5 @@
 #include "lexer.h"
 #include "stdbool.h"
-#include <stdio.h>
 
 char *tokenTypeToString(Token token) {
   switch (token.type) {
@@ -8,6 +7,8 @@ char *tokenTypeToString(Token token) {
     return "INTEGER";
   case TOKEN_STRING:
     return "STRING";
+  case TOKEN_TYPE_DECLARATION:
+    return "TYPE_DECLARATION";
   case TOKEN_BOOLEAN:
     return "BOOLEAN";
   case TOKEN_EOF:
@@ -16,6 +17,7 @@ char *tokenTypeToString(Token token) {
   case TOKEN_EQ:
   case TOKEN_NOT_EQ:
   case TOKEN_ASSIGN:
+    return "=";
   case TOKEN_PLUS:
     return "+";
   case TOKEN_MINUS:
@@ -29,6 +31,15 @@ char *tokenTypeToString(Token token) {
   case TOKEN_ILLEGAL:
     return "illegal token!";
     break;
+  case TOKEN_IDENTIFIER:
+    return "TOKEN_IDENTIFIER";
+    break;
+  case TOKEN_COLON:
+    return ":";
+  case TOKEN_CONST_DECLARATION:
+    return "::";
+  case TOKEN_MUT_DECLARATION:
+    return ":=";
   }
 }
 
