@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include "stdbool.h"
 
+// TODO: vertalingen gelijktrekken
 char *tokenTypeToString(TokenType type) {
   switch (type) {
   case TOKEN_INTEGER:
@@ -23,6 +24,8 @@ char *tokenTypeToString(TokenType type) {
     return "::";
   case TOKEN_MUT_DECLARATION:
     return ":=";
+  case TOKEN_KEYWORD:
+    return "TOKEN_KEYWORD";
   }
   return "UNKNOW TOKEN";
 }
@@ -33,9 +36,15 @@ char advance(Lexer *lexer) {
   return lexer->current[-1];
 }
 
+char peek(Lexer *lexer) { return lexer->current[0]; }
+
 bool isAtEnd(Lexer *lexer) { return *lexer->current == '\0'; }
 
-char peek(Lexer *lexer) { return lexer->current[0]; }
+bool isChar(char c) {
+  return (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'));
+}
+
+bool isNumber(char c) { return ('0' <= c && c <= '9'); }
 
 static void skipWhitespace(Lexer *lexer) {
   for (;;) {
@@ -98,6 +107,45 @@ Token nextToken(Lexer *lexer) {
   case '+':
     return makeToken(lexer, TOKEN_PLUS);
     break;
+  case ':':
+    switch (peek(lexer)) {
+    case ':':
+      return makeToken(lexer, TOKEN_CONST_DECLARATION);
+      break;
+    case '=':
+      return makeToken(lexer, TOKEN_MUT_DECLARATION);
+      break;
+    default:
+      return makeToken(lexer, TOKEN_COLON);
+    }
+    return makeToken(lexer, TOKEN_COLON);
+    break;
+  case '=':
+    return makeToken(lexer, TOKEN_ASSIGN);
+    break;
+  default:
+    if (isChar(c)) {
+      while (isChar(peek(lexer))) {
+        advance(lexer);
+      }
+      switch (lexer->start[0]) {
+      case 'i':
+        // TODO: use strcmp but forgot how to use it, to tired -> tomorrow
+        return makeToken(lexer, TOKEN_TYPE_DECLARATION);
+        break;
+      default:
+        return makeToken(lexer, TOKEN_IDENTIFIER);
+        break;
+      }
+    }
+    if (isNumber(c)) {
+      while (isNumber(peek(lexer))) {
+        advance(lexer);
+      }
+      // NOTE: we switch on the start of the current token to see if it's an
+      // identifer or a keyword
+      return makeToken(lexer, TOKEN_INTEGER);
+    }
   }
   return makeErrorToken(lexer);
 }
