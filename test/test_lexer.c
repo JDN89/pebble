@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-void testLexer() {
+void testTypeAndUntypedVariableDeclarations() {
   char *source = " x : int = 5 \n"
                  "x :: 5 \n"
                  "x := 5 \n";
@@ -34,10 +34,11 @@ void testLexer() {
     counter++;
     break;
   }
+  printf("Typed and untyped variable declarations test -- PASSED \n");
 }
 
 int main() {
   printf("START testing LEXER\n");
-
-  testLexer();
+  testTypeAndUntypedVariableDeclarations();
+  printf("finished running LEXER tests \n");
 }
