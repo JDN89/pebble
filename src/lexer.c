@@ -139,6 +139,7 @@ Token nextToken(Lexer *lexer) {
   case '/':
     return makeToken(lexer, TOKEN_SLASH);
     break;
+    // BUG: this fails in test why? returns token TOKEN_COLON
   case ':':
     switch (peek(lexer)) {
     case ':':
