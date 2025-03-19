@@ -10,7 +10,7 @@
 /*}*/
 
 void parseSource(char *source) {
-  printf("source -- %s \n", source);
+  printf("source -- \n%s \n", source);
 
   /*initParser(source);*/
 

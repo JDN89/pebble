@@ -1,7 +1,9 @@
 #include "lexer.h"
 #include "stdbool.h"
+#include <string.h>
 
-// TODO: vertalingen gelijktrekken
+static Token makeToken(Lexer *lexer, TokenType type);
+
 char *tokenTypeToString(TokenType type) {
   switch (type) {
   case TOKEN_INTEGER:
@@ -45,6 +47,14 @@ bool isChar(char c) {
 }
 
 bool isNumber(char c) { return ('0' <= c && c <= '9'); }
+
+Token checkKeyword(Lexer *lexer, TokenType type, const char *keyword) {
+  if (memcmp(lexer->start, keyword, lexer->current - lexer->start) == 0) {
+    return makeToken(lexer, type);
+  } else {
+    return makeToken(lexer, TOKEN_IDENTIFIER);
+  }
+}
 
 static void skipWhitespace(Lexer *lexer) {
   for (;;) {
@@ -130,8 +140,7 @@ Token nextToken(Lexer *lexer) {
       }
       switch (lexer->start[0]) {
       case 'i':
-        // TODO: use strcmp but forgot how to use it, to tired -> tomorrow
-        return makeToken(lexer, TOKEN_TYPE_DECLARATION);
+        return checkKeyword(lexer, TOKEN_TYPE_DECLARATION, "int");
         break;
       default:
         return makeToken(lexer, TOKEN_IDENTIFIER);
