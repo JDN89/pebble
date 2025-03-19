@@ -5,25 +5,25 @@
 char *tokenTypeToString(TokenType type) {
   switch (type) {
   case TOKEN_INTEGER:
-    return "INTEGER";
+    return "TOKEN_INTEGER";
   case TOKEN_TYPE_DECLARATION:
-    return "TYPE_DECLARATION";
+    return "TOKEN_TYPE_DECLARATION";
   case TOKEN_EOF:
-    return "EOF";
+    return "TOKEN_EOF";
   case TOKEN_ASSIGN:
-    return "=";
+    return "TOKEN_ASSIGN";
   case TOKEN_PLUS:
-    return "+";
+    return "TOKEN_PLUS";
   case TOKEN_ILLEGAL:
-    return "illegal token!";
+    return "TOKEN_ILLEGAL";
   case TOKEN_IDENTIFIER:
     return "TOKEN_IDENTIFIER";
   case TOKEN_COLON:
-    return ":";
+    return "TOKEN_COLON";
   case TOKEN_CONST_DECLARATION:
-    return "::";
+    return "TOKEN_CONST_DECLARATION";
   case TOKEN_MUT_DECLARATION:
-    return ":=";
+    return "TOKEN_MUT_DECLARATION";
   case TOKEN_KEYWORD:
     return "TOKEN_KEYWORD";
   }
