@@ -42,17 +42,17 @@ char peek(Lexer *lexer) { return lexer->current[0]; }
 
 bool isAtEnd(Lexer *lexer) { return *lexer->current == '\0'; }
 
-// @Jan: this method will get called a lot. See there is any wiggle room for
+// TODO: this method will get called a lot. See there is any wiggle room for
 // optimization Look at lua or tinyCC compiler for exmaples or inspiration
 bool isChar(char c) {
   return (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'));
 }
 
-// @Jan: this method will get called a lot. See there is any wiggle room for
+// TODO: this method will get called a lot. See there is any wiggle room for
 // optimization Look at lua or tinyCC compiler for exmaples or inspiration
 bool isNumber(char c) { return ('0' <= c && c <= '9'); }
 
-// @Jan: this method will get called a lot. See there is any wiggle room for
+// TODO: this method will get called a lot. See there is any wiggle room for
 // optimization
 Token checkKeyword(Lexer *lexer, TokenType type, const char *keyword) {
   if (memcmp(lexer->start, keyword, lexer->current - lexer->start) == 0) {
