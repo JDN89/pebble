@@ -5,8 +5,12 @@ set -e  # Exit on error
 # Remove old executables
 rm -f pebble test_lexer
 
-# Compile main program
+# Compile main program and test files when you don't give arguments
+# pebble
 gcc -Wall -Wextra -pedantic -g main.c src/*.c -o pebble
+
+# test_lexer
+gcc -Wall -Wextra -pedantic -g src/lexer.c test/test_lexer.c -o test_lexer
 
 # Check CLI argument
 case "$1" in
@@ -14,7 +18,7 @@ case "$1" in
         ./pebble "${2:-}"
         ;;
     test_lexer)
-        gcc -Wall -Wextra -pedantic -g src/lexer.c test/test_lexer.c -o test_lexer
+	./test_lexer
         ;;
     *)
         echo "Usage: $0 {run|test_lexer}"
