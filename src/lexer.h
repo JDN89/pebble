@@ -17,6 +17,9 @@ typedef enum {
   // Operators
   TOKEN_ASSIGN,
   TOKEN_PLUS,
+  TOKEN_MINUS,
+  TOKEN_ASTERISK,
+  TOKEN_SLASH,
 
 } TokenType;
 

@@ -14,8 +14,7 @@ case "$1" in
         ./pebble "${2:-}"
         ;;
     test_lexer)
-        gcc -Wall -Wextra -pedantic src/lexer.c test/test_lexer.c -o test_lexer
-        ./test_lexer test_file.txt
+        gcc -Wall -Wextra -pedantic -g src/lexer.c test/test_lexer.c -o test_lexer
         ;;
     *)
         echo "Usage: $0 {run|test_lexer}"

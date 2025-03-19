@@ -28,6 +28,13 @@ char *tokenTypeToString(TokenType type) {
     return "TOKEN_MUT_DECLARATION";
   case TOKEN_KEYWORD:
     return "TOKEN_KEYWORD";
+  case TOKEN_MINUS:
+    return "TOKEN_MINUS";
+  case TOKEN_ASTERISK:
+    return "TOKEN_ASTERISK";
+  case TOKEN_SLASH:
+    return "TOKEN_SLASH";
+    break;
   }
   return "UNKNOW TOKEN";
 }
@@ -122,6 +129,15 @@ Token nextToken(Lexer *lexer) {
   switch (c) {
   case '+':
     return makeToken(lexer, TOKEN_PLUS);
+    break;
+  case '-':
+    return makeToken(lexer, TOKEN_MINUS);
+    break;
+  case '*':
+    return makeToken(lexer, TOKEN_ASTERISK);
+    break;
+  case '/':
+    return makeToken(lexer, TOKEN_SLASH);
     break;
   case ':':
     switch (peek(lexer)) {

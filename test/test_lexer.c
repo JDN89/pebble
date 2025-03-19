@@ -2,9 +2,10 @@
 #include <assert.h>
 #include <stdio.h>
 
-void testTypeAndUntypedVariableDeclarations() {
+void testVariableDeclarations() {
   char *source = " x : int = 5 \n"
                  "x :: 5 \n"
+                 "x :: 6 + 5 - 4 * 3  \n"
                  "x := 5 \n";
 
   TokenType expectedTokens[] = {TOKEN_IDENTIFIER,
@@ -14,6 +15,12 @@ void testTypeAndUntypedVariableDeclarations() {
                                 TOKEN_INTEGER,
                                 TOKEN_IDENTIFIER,
                                 TOKEN_CONST_DECLARATION,
+                                TOKEN_INTEGER,
+                                TOKEN_PLUS,
+                                TOKEN_INTEGER,
+                                TOKEN_MUT_DECLARATION,
+                                TOKEN_INTEGER,
+                                TOKEN_ASTERISK,
                                 TOKEN_MUT_DECLARATION,
                                 TOKEN_EOF};
 
@@ -32,13 +39,15 @@ void testTypeAndUntypedVariableDeclarations() {
 
     assert(token.type == expectedTokens[counter]);
     counter++;
-    break;
+    if (token.type == TOKEN_EOF) {
+      break;
+    }
   }
   printf("Typed and untyped variable declarations test -- PASSED \n");
 }
 
 int main() {
   printf("START testing LEXER\n");
-  testTypeAndUntypedVariableDeclarations();
+  testVariableDeclarations();
   printf("finished running LEXER tests \n");
 }
