@@ -1,4 +1,4 @@
-#include "src/parser.h"
+#include "parser.h"
 #include <stdio.h>
 #include <stdlib.h>
 
