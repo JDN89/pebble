@@ -32,8 +32,10 @@ void testVariableDeclarations() {
     Token token = nextToken(&lexer);
 
     if (token.type != expectedTokens[counter]) {
-      fprintf(stderr, "Assertion failed at token[%d]: expected %s, got %s\n",
-              counter, tokenTypeToString(expectedTokens[counter]),
+      fprintf(stderr,
+              "Assertion failed at token[%d] source[%c]: expected %s, got %s\n",
+              counter, source[token.offset],
+              tokenTypeToString(expectedTokens[counter]),
               tokenTypeToString(token.type));
     }
 
