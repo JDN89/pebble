@@ -141,7 +141,7 @@ Token nextToken(Lexer *lexer) {
     break;
     // BUG: this fails in test why? returns token TOKEN_COLON
   case ':':
-    switch (peek(lexer)) {
+    switch (advance(lexer)) {
     case ':':
       return makeToken(lexer, TOKEN_CONST_DECLARATION);
       break;

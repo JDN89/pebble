@@ -8,7 +8,8 @@ EXECUTABLE = build/pebble
 
 # Test sources (assuming you have test_lexer.c)
 TEST_SOURCES = test/test_lexer.c src/lexer.c
-TEST_OBJECTS = $(TEST_SOURCES:src/%.c=build/%.o)  # Fixed this as well
+TEST_OBJECTS = $(patsubst src/%.c,build/%.o,$(filter src/%.c,$(TEST_SOURCES))) \
+               $(patsubst test/%.c,build/%.o,$(filter test/%.c,$(TEST_SOURCES)))
 TEST_EXECUTABLE = build/test_lexer
 
 # Ensure the build directory exists before compiling
@@ -32,6 +33,9 @@ test: $(TEST_OBJECTS)
 
 # Pattern rule to compile .c files into .o objects and put them in the build directory
 build/%.o: src/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+build/%.o: test/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 # Clean up generated files
