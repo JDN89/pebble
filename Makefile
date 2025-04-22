@@ -20,7 +20,6 @@ CFLAGS = $(CFLAGS_DEBUG)
 
 # Default target to build the main executable and run it (in debug mode by default)
 all: $(EXECUTABLE)
-	./$(EXECUTABLE)  # Executes the main program after it's built
 
 # Build the main executable (can be debug or release based on CFLAGS)
 $(EXECUTABLE): $(OBJECTS)
