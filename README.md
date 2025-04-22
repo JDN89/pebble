@@ -11,3 +11,6 @@ Messing around with compilers
 ```./test_lexer``` to run ./test_lexer \
 inside gdb: run test_file.txt -> to run pebble in gdb with the test file 
 
+## style guide
+(follow parts the cURL style guide)[https://github.com/curl/curl/blob/master/docs/internals/CODE_STYLE.md]
+
