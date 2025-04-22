@@ -12,5 +12,7 @@ Messing around with compilers
 inside gdb: run test_file.txt -> to run pebble in gdb with the test file 
 
 ## style guide
-(follow parts the cURL style guide)[https://github.com/curl/curl/blob/master/docs/internals/CODE_STYLE.md]
+[follow parts the cURL style guide](https://github.com/curl/curl/blob/master/docs/internals/CODE_STYLE.md)
 
+## TODO
+How to add linter to C code base? via LSP?

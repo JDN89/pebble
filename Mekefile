@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS_DEBUG = -Wall -Wextra -g  # Debug flags with debug symbols
 CFLAGS_RELEASE = -Wall -Wextra -O2  # Release flags with optimization (-O2)
 
-SOURCES = src/main.c src/lexer.c src/parser.c
+SOURCES = src/main.c src/lexer.c src/parser.c src/value.c
 OBJECTS = $(SOURCES:src/%.c=build/%.o)  # Fixed the object file path here
 EXECUTABLE = build/pebble
 
