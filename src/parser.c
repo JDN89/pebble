@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "lexer.h"
+#include "value.h"
 #include <stdio.h>
 
 // init parser and keep asking for tokens -> scanning for demand

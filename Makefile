@@ -2,50 +2,55 @@ CC = gcc
 CFLAGS_DEBUG = -Wall -Wextra -g  # Debug flags with debug symbols
 CFLAGS_RELEASE = -Wall -Wextra -O2  # Release flags with optimization (-O2)
 
-SOURCES = src/main.c src/lexer.c src/parser.c src/value.c
-OBJECTS = $(SOURCES:src/%.c=build/%.o)  # Fixed the object file path here
+# Source files
+SOURCES = src/main.c src/lexer.c src/parser.c
+OBJECTS = $(SOURCES:src/%.c=build/%.o)
 EXECUTABLE = build/pebble
 
-# Test sources (assuming you have test_lexer.c)
-TEST_SOURCES = test/test_lexer.c src/lexer.c
+# Test source files
+TEST_SOURCES = test/test_lexer.c test/test_value.c src/lexer.c src/parser.c src/value.c
 TEST_OBJECTS = $(patsubst src/%.c,build/%.o,$(filter src/%.c,$(TEST_SOURCES))) \
                $(patsubst test/%.c,build/%.o,$(filter test/%.c,$(TEST_SOURCES)))
-TEST_EXECUTABLE = build/test_lexer
 
-# Ensure the build directory exists before compiling
+TEST_EXECUTABLES = build/test_lexer build/test_value
+
+# Ensure build directory exists
 $(shell mkdir -p build)
 
-# By default, use debug flags unless explicitly set to release
-CFLAGS = $(CFLAGS_DEBUG)
-
-# Default target to build the main executable and run it (in debug mode by default)
+# Default target
 all: $(EXECUTABLE)
 
-# Build the main executable (can be debug or release based on CFLAGS)
+# Main program build
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^
 
-# Build the test lexer executable
-test: $(TEST_OBJECTS)
-	$(CC) $(CFLAGS) -o $(TEST_EXECUTABLE) $(TEST_OBJECTS)
-	./$(TEST_EXECUTABLE) # Executes the test after building
+# Test build and run
+test: $(TEST_EXECUTABLES)
+	@./build/test_lexer
+	@./build/test_value
 
-# Pattern rule to compile .c files into .o objects and put them in the build directory
+build/test_lexer: build/test_lexer.o build/lexer.o build/parser.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+build/test_value: build/test_value.o build/value.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Pattern rules
 build/%.o: src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 build/%.o: test/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-# Clean up generated files
+# Clean build artifacts
 clean:
 	rm -rf build
 
-# Run the executable after building it (if needed, this can be a separate target you want to run)
+# Run main program
 run: $(EXECUTABLE)
-	./$(EXECUTABLE)  # Executes the main program (or any other target you want to run)
+	./$(EXECUTABLE)
 
-# Target for release build (uses release flags)
-release: CFLAGS = $(CFLAGS_RELEASE)
+# Release build
+release: CFLAGS = -O2 -Wall
 release: $(EXECUTABLE)
-	./$(EXECUTABLE)  # Runs the release version
+	./$(EXECUTABLE)
