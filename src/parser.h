@@ -13,6 +13,6 @@ typedef struct {
 
 void initParser(const char *source);
 
-void parseSource(char *source);
+void parse_source(char *source);
 
 #endif

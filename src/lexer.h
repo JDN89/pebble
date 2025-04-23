@@ -12,6 +12,7 @@ typedef enum {
   TOKEN_COLON,
   TOKEN_CONST_DECLARATION,
   TOKEN_MUT_DECLARATION,
+  TOKEN_RETURN,
 
   TOKEN_ILLEGAL,
   // Operators
@@ -21,17 +22,17 @@ typedef enum {
   TOKEN_ASTERISK,
   TOKEN_SLASH,
 
-} TokenType;
+} token_type;
 
 typedef struct {
-  TokenType type;
+  token_type type;
   int offset;
   size_t length;
   size_t line;
 } Token;
 
 typedef struct {
-  TokenType type;
+  token_type type;
   int offset;
   size_t length;
   size_t line;
@@ -45,7 +46,7 @@ typedef struct Lexer {
   int line;
 } Lexer;
 
-char *tokenTypeToString(TokenType type);
+char *tokenTypeToString(token_type type);
 
 Lexer initLexer(const char *source);
 

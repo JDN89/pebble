@@ -22,7 +22,7 @@ all: $(EXECUTABLE)
 
 # Main program build
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS_DEBUG) -o $@ $^
 
 # Test build and run
 test: $(TEST_EXECUTABLES)
@@ -30,17 +30,17 @@ test: $(TEST_EXECUTABLES)
 	@./build/test_value
 
 build/test_lexer: build/test_lexer.o build/lexer.o build/parser.o
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS_DEBUG) -o $@ $^
 
 build/test_value: build/test_value.o build/value.o
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS_DEBUG) -o $@ $^
 
 # Pattern rules
 build/%.o: src/%.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ $<
 
 build/%.o: test/%.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS_DEBUG) -c -o $@ $<
 
 # Clean build artifacts
 clean:

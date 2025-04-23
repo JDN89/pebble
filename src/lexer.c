@@ -2,9 +2,9 @@
 #include "stdbool.h"
 #include <string.h>
 
-static Token makeToken(Lexer *lexer, TokenType type);
+static Token makeToken(Lexer *lexer, token_type type);
 
-char *tokenTypeToString(TokenType type) {
+char *tokenTypeToString(token_type type) {
   switch (type) {
   case TOKEN_INTEGER:
     return "TOKEN_INTEGER";
@@ -35,6 +35,9 @@ char *tokenTypeToString(TokenType type) {
   case TOKEN_SLASH:
     return "TOKEN_SLASH";
     break;
+  case TOKEN_RETURN:
+    return "TOKEN_RETURN";
+    break;
   }
   return "UNKNOW TOKEN";
 }
@@ -61,7 +64,7 @@ bool isNumber(char c) { return ('0' <= c && c <= '9'); }
 
 // TODO: this method will get called a lot. See there is any wiggle room for
 // optimization
-Token checkKeyword(Lexer *lexer, TokenType type, const char *keyword) {
+Token checkKeyword(Lexer *lexer, token_type type, const char *keyword) {
   if (memcmp(lexer->start, keyword, lexer->current - lexer->start) == 0) {
     return makeToken(lexer, type);
   } else {
@@ -87,7 +90,7 @@ static void skipWhitespace(Lexer *lexer) {
     }
   }
 }
-Token makeToken(Lexer *lexer, TokenType type) {
+Token makeToken(Lexer *lexer, token_type type) {
   Token token = {0};
   token.offset = lexer->start - lexer->startOfSource;
   token.length = lexer->current - lexer->start;
@@ -164,6 +167,9 @@ Token nextToken(Lexer *lexer) {
       switch (lexer->start[0]) {
       case 'i':
         return checkKeyword(lexer, TOKEN_TYPE_DECLARATION, "int");
+        break;
+      case 'r':
+        return checkKeyword(lexer, TOKEN_RETURN, "return");
         break;
       default:
         return makeToken(lexer, TOKEN_IDENTIFIER);

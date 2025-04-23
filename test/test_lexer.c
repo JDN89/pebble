@@ -33,29 +33,32 @@ void testVariableDeclarations() {
   char *source = " x : int = 5 \n"
                  "x :: 5 \n"
                  "x :: 6 + 5 - 4 * 3  \n"
-                 "x := 5 \n";
+                 "x := 5 \n"
+                 "return 4 \n";
 
-  TokenType expectedTokens[] = {TOKEN_IDENTIFIER,
-                                TOKEN_COLON,
-                                TOKEN_TYPE_DECLARATION,
-                                TOKEN_ASSIGN,
-                                TOKEN_INTEGER,
-                                TOKEN_IDENTIFIER,
-                                TOKEN_CONST_DECLARATION,
-                                TOKEN_INTEGER,
-                                TOKEN_IDENTIFIER,
-                                TOKEN_CONST_DECLARATION,
-                                TOKEN_INTEGER,
-                                TOKEN_PLUS,
-                                TOKEN_INTEGER,
-                                TOKEN_MINUS,
-                                TOKEN_INTEGER,
-                                TOKEN_ASTERISK,
-                                TOKEN_INTEGER,
-                                TOKEN_IDENTIFIER,
-                                TOKEN_MUT_DECLARATION,
-                                TOKEN_INTEGER,
-                                TOKEN_EOF};
+  token_type expectedTokens[] = {TOKEN_IDENTIFIER,
+                                 TOKEN_COLON,
+                                 TOKEN_TYPE_DECLARATION,
+                                 TOKEN_ASSIGN,
+                                 TOKEN_INTEGER,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_CONST_DECLARATION,
+                                 TOKEN_INTEGER,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_CONST_DECLARATION,
+                                 TOKEN_INTEGER,
+                                 TOKEN_PLUS,
+                                 TOKEN_INTEGER,
+                                 TOKEN_MINUS,
+                                 TOKEN_INTEGER,
+                                 TOKEN_ASTERISK,
+                                 TOKEN_INTEGER,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_MUT_DECLARATION,
+                                 TOKEN_INTEGER,
+                                 TOKEN_RETURN,
+                                 TOKEN_INTEGER,
+                                 TOKEN_EOF};
 
   Lexer lexer = initLexer(source);
 

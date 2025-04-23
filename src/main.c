@@ -41,9 +41,10 @@ static char *readFile(const char *path) {
 
 static void runFile(const char *path) {
   char *source = readFile(path);
-  parseSource(source);
-  free(source);
+  printf("source -- \n%s \n", source);
+  parse_source(source);
 
+  free(source);
   // parse source
   /*InterpretResult result = interpret(source);*/
   /*free(source);*/
