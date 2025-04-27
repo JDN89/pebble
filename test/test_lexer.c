@@ -62,7 +62,6 @@ void testVariableDeclarations() {
                                  TOKEN_PLUS,
                                  TOKEN_IDENTIFIER,
                                  TOKEN_SEMICOLON,
-
                                  TOKEN_LET,
                                  TOKEN_IDENTIFIER,
                                  TOKEN_COLON,
@@ -111,7 +110,7 @@ void testVariableDeclarations() {
       break;
     }
   }
-  printf("Typed and untyped variable declarations test -- PASSED \n");
+  printf("Typed mutable variable declarations test -- PASSED \n");
 }
 
 int main() {

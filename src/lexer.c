@@ -22,10 +22,6 @@ char *tokenTypeToString(token_type type) {
     return "TOKEN_IDENTIFIER";
   case TOKEN_COLON:
     return "TOKEN_COLON";
-  case TOKEN_CONST_DECLARATION:
-    return "TOKEN_CONST_DECLARATION";
-  case TOKEN_MUT_DECLARATION:
-    return "TOKEN_MUT_DECLARATION";
   case TOKEN_KEYWORD:
     return "TOKEN_KEYWORD";
   case TOKEN_MINUS:
@@ -37,6 +33,15 @@ char *tokenTypeToString(token_type type) {
     break;
   case TOKEN_RETURN:
     return "TOKEN_RETURN";
+    break;
+  case TOKEN_LET:
+    return "TOKEN_LET";
+    break;
+  case TOKEN_SEMICOLON:
+    return "TOKEN_SEMICOLON";
+    break;
+  case TOKEN_PRINT:
+    return "TOKEN_PRINT";
     break;
   }
   return "UNKNOW TOKEN";
@@ -144,17 +149,10 @@ Token nextToken(Lexer *lexer) {
     break;
     // BUG: this fails in test why? returns token TOKEN_COLON
   case ':':
-    switch (advance(lexer)) {
-    case ':':
-      return makeToken(lexer, TOKEN_CONST_DECLARATION);
-      break;
-    case '=':
-      return makeToken(lexer, TOKEN_MUT_DECLARATION);
-      break;
-    default:
-      return makeToken(lexer, TOKEN_COLON);
-    }
     return makeToken(lexer, TOKEN_COLON);
+    break;
+  case ';':
+    return makeToken(lexer, TOKEN_SEMICOLON);
     break;
   case '=':
     return makeToken(lexer, TOKEN_ASSIGN);
@@ -170,6 +168,12 @@ Token nextToken(Lexer *lexer) {
         break;
       case 'r':
         return checkKeyword(lexer, TOKEN_RETURN, "return");
+        break;
+      case 'p':
+        return checkKeyword(lexer, TOKEN_PRINT, "print");
+        break;
+      case 'l':
+        return checkKeyword(lexer, TOKEN_LET, "let");
         break;
       default:
         return makeToken(lexer, TOKEN_IDENTIFIER);

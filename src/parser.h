@@ -10,9 +10,9 @@ typedef struct {
   char *errors[ERROR_SIZE];
   int errorCount;
   Lexer lex;
-} Parser;
+} parser;
 
-void create_parser(Lexer *lexer);
+parser create_parser(Lexer *lexer);
 
 void parse_source(char *source);
 

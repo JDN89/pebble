@@ -28,13 +28,14 @@ void parse_source(char *source) {
     case TOKEN_IDENTIFIER:
     case TOKEN_KEYWORD:
     case TOKEN_COLON:
-    case TOKEN_CONST_DECLARATION:
-    case TOKEN_MUT_DECLARATION:
     case TOKEN_ILLEGAL:
     case TOKEN_ASSIGN:
     case TOKEN_PLUS:
     case TOKEN_MINUS:
     case TOKEN_ASTERISK:
+    case TOKEN_LET:
+    case TOKEN_SEMICOLON:
+    case TOKEN_PRINT:
     case TOKEN_SLASH: {
       printf("TODO report error; Read chapter error handling in book effective "
              "c. Or google it");
@@ -45,12 +46,14 @@ void parse_source(char *source) {
     }
 
     break;
+      break;
     }
 
     printf("Token Type %s \n", tokenTypeToString(token.type));
 
     // NOTE: Bitwise & comparison that compares each bit token.type and compares
     // it to TOKEN EOF
+    // you say wut mate?
     if (token.type == TOKEN_EOF)
       break;
   };

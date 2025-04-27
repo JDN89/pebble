@@ -43,9 +43,9 @@ static void runFile(const char *path) {
   char *source = readFile(path);
   printf("source -- \n%s \n", source);
   Lexer lexer = initLexer(source);
-  parser parser = create_parser(&lexer)
+  // parser parser = create_parser(&lexer);
 
-      parse_source(source);
+  parse_source(source);
 
   free(source);
   // parse source
