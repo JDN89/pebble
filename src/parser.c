@@ -10,14 +10,10 @@
 /*}*/
 
 // TODO: create arena and add to the arena. What is the lifetime of the AST?
-void parse_retun_statement(Token token) {
-  printf("parse return statement started");
-}
+void parse_retun_statement(Token token) {}
 
 void parse_source(char *source) {
   printf("source -- \n%s \n", source);
-
-  /*initParser(source);*/
 
   Lexer lexer = initLexer(source);
 
@@ -44,6 +40,7 @@ void parse_source(char *source) {
              "c. Or google it");
     } break;
     case TOKEN_RETURN: {
+      printf("token return");
 
     }
 

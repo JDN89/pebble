@@ -9,9 +9,10 @@ typedef struct {
   Token pt;
   char *errors[ERROR_SIZE];
   int errorCount;
+  Lexer lex;
 } Parser;
 
-void initParser(const char *source);
+void create_parser(Lexer *lexer);
 
 void parse_source(char *source);
 
