@@ -30,34 +30,64 @@
 // }
 
 void testVariableDeclarations() {
-  char *source = " x : int = 5 \n"
-                 "x :: 5 \n"
-                 "x :: 6 + 5 - 4 * 3  \n"
-                 "x := 5 \n"
-                 "return 4 \n";
+  char *source =
 
-  token_type expectedTokens[] = {TOKEN_IDENTIFIER,
+      " let a: int = 3 \n;"
+      "let b: int = 4; \n"
+      "let c : int  = a + b; \n"
+      "let d: int = c * a; \n"
+      "let result : int = a + b * c + d;\n"
+      " print result;";
+
+  token_type expectedTokens[] = {TOKEN_LET,
+                                 TOKEN_IDENTIFIER,
                                  TOKEN_COLON,
                                  TOKEN_TYPE_DECLARATION,
                                  TOKEN_ASSIGN,
                                  TOKEN_INTEGER,
+                                 TOKEN_SEMICOLON,
+                                 TOKEN_LET,
                                  TOKEN_IDENTIFIER,
-                                 TOKEN_CONST_DECLARATION,
+                                 TOKEN_COLON,
+                                 TOKEN_TYPE_DECLARATION,
+                                 TOKEN_ASSIGN,
                                  TOKEN_INTEGER,
+                                 TOKEN_SEMICOLON,
+                                 TOKEN_LET,
                                  TOKEN_IDENTIFIER,
-                                 TOKEN_CONST_DECLARATION,
-                                 TOKEN_INTEGER,
+                                 TOKEN_COLON,
+                                 TOKEN_TYPE_DECLARATION,
+                                 TOKEN_ASSIGN,
+                                 TOKEN_IDENTIFIER,
                                  TOKEN_PLUS,
-                                 TOKEN_INTEGER,
-                                 TOKEN_MINUS,
-                                 TOKEN_INTEGER,
-                                 TOKEN_ASTERISK,
-                                 TOKEN_INTEGER,
                                  TOKEN_IDENTIFIER,
-                                 TOKEN_MUT_DECLARATION,
-                                 TOKEN_INTEGER,
-                                 TOKEN_RETURN,
-                                 TOKEN_INTEGER,
+                                 TOKEN_SEMICOLON,
+
+                                 TOKEN_LET,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_COLON,
+                                 TOKEN_TYPE_DECLARATION,
+                                 TOKEN_ASSIGN,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_ASTERISK,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_SEMICOLON,
+                                 TOKEN_LET,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_COLON,
+                                 TOKEN_TYPE_DECLARATION,
+                                 TOKEN_ASSIGN,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_PLUS,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_ASTERISK,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_PLUS,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_SEMICOLON,
+                                 TOKEN_PRINT,
+                                 TOKEN_IDENTIFIER,
+                                 TOKEN_SEMICOLON,
                                  TOKEN_EOF};
 
   Lexer lexer = initLexer(source);
