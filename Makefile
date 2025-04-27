@@ -1,56 +1,41 @@
-CC = gcc
-CFLAGS_DEBUG = -Wall -Wextra -g  # Debug flags with debug symbols
-CFLAGS_RELEASE = -Wall -Wextra -O2  # Release flags with optimization (-O2)
+# Compiler and flags
+CC = clang
+CFLAGS_DEBUG = -Wall -Wextra -pedantic -g
 
-# Source files
-SOURCES = src/main.c src/lexer.c src/parser.c
-OBJECTS = $(SOURCES:src/%.c=build/%.o)
+# Executables
 EXECUTABLE = build/pebble
-
-# Test source files
-TEST_SOURCES = test/test_lexer.c test/test_value.c src/lexer.c src/parser.c src/value.c
-TEST_OBJECTS = $(patsubst src/%.c,build/%.o,$(filter src/%.c,$(TEST_SOURCES))) \
-               $(patsubst test/%.c,build/%.o,$(filter test/%.c,$(TEST_SOURCES)))
-
 TEST_EXECUTABLES = build/test_lexer build/test_value
 
-# Ensure build directory exists
-$(shell mkdir -p build)
+# Make sure build/ exists
+build:
+	mkdir -p build
 
-# Default target
+# Default build target
 all: $(EXECUTABLE)
 
-# Main program build
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS_DEBUG) -o $@ $^
+# Build main program
+$(EXECUTABLE): build
+	$(CC) $(CFLAGS_DEBUG) -o build/pebble src/main.c src/lexer.c src/parser.c
 
-# Test build and run
+# Build tests
+build/test_lexer: build
+	$(CC) $(CFLAGS_DEBUG) -o build/test_lexer test/test_lexer.c src/lexer.c src/parser.c
+
+build/test_value: build
+	$(CC) $(CFLAGS_DEBUG) -o build/test_value test/test_value.c src/value.c
+
+# Run tests
 test: $(TEST_EXECUTABLES)
-	@./build/test_lexer
-	@./build/test_value
+	./build/test_lexer
+	./build/test_value
 
-build/test_lexer: build/test_lexer.o build/lexer.o build/parser.o
-	$(CC) $(CFLAGS_DEBUG) -o $@ $^
-
-build/test_value: build/test_value.o build/value.o
-	$(CC) $(CFLAGS_DEBUG) -o $@ $^
-
-# Pattern rules
-build/%.o: src/%.c
-	$(CC) $(CFLAGS_DEBUG) -c -o $@ $<
-
-build/%.o: test/%.c
-	$(CC) $(CFLAGS_DEBUG) -c -o $@ $<
-
-# Clean build artifacts
-clean:
-	rm -rf build
-
+test_lexer: $(TEST_EXECUTABLES)
+	./build/test_lexer
+	
 # Run main program
 run: $(EXECUTABLE)
-	./$(EXECUTABLE)
+	./build/pebble
 
-# Release build
-release: CFLAGS = -O2 -Wall
-release: $(EXECUTABLE)
-	./$(EXECUTABLE)
+# Clean everything
+clean:
+	rm -rf build
