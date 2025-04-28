@@ -4,6 +4,14 @@
 #include "lexer.h"
 
 #define ERROR_SIZE 256
+
+enum precedence {
+  LOWEST,
+  EQUALS,
+  SUM,
+  PRODUCT,
+};
+
 typedef struct {
   Token ct;
   Token pt;

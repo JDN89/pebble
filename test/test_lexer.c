@@ -89,7 +89,7 @@ void testVariableDeclarations() {
                                  TOKEN_SEMICOLON,
                                  TOKEN_EOF};
 
-  Lexer lexer = initLexer(source);
+  Lexer lexer = create_lexer(source);
 
   int counter = 0;
 

@@ -15,11 +15,11 @@ all: $(EXECUTABLE)
 
 # Build main program
 $(EXECUTABLE): build
-	$(CC) $(CFLAGS_DEBUG) -o build/pebble src/main.c src/lexer.c src/parser.c
+	$(CC) $(CFLAGS_DEBUG) -o build/pebble src/main.c src/lexer.c src/parser.c src/arena.c src/program.c
 
 # Build tests
 build/test_lexer: build
-	$(CC) $(CFLAGS_DEBUG) -o build/test_lexer test/test_lexer.c src/lexer.c src/parser.c
+	$(CC) $(CFLAGS_DEBUG) -o build/test_lexer test/test_lexer.c src/lexer.c 
 
 build/test_value: build
 	$(CC) $(CFLAGS_DEBUG) -o build/test_value test/test_value.c src/value.c

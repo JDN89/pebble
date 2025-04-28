@@ -4,7 +4,7 @@
 
 enum value_type { VAL_NUMBER, VAL_BOOLEAN };
 
-struct value {
+struct Value {
   enum value_type type;
   union {
     double number;
@@ -14,6 +14,6 @@ struct value {
 
 #define IS_NUMBER(val) ((val).type == VAL_NUMBER)
 #define AS_NUMBER(val) ((val).as.number)
-#define NUMBER(val) ((struct value){VAL_NUMBER, {.number = val}})
+#define NUMBER(val) ((struct Value){VAL_NUMBER, {.number = val}})
 
 #endif // !VALUE

@@ -113,7 +113,7 @@ Token makeErrorToken(Lexer *lexer) {
   return token;
 }
 
-Lexer initLexer(const char *source) {
+Lexer create_lexer(const char *source) {
   Lexer lexer = {0};
   lexer.startOfSource = source;
   lexer.start = source;

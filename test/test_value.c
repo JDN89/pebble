@@ -6,7 +6,7 @@ void test_create_number_value() {
 
   printf("start test create number value");
   double val = 33;
-  struct value number_value = {0};
+  struct Value number_value = {0};
 
   number_value = NUMBER(33);
 
