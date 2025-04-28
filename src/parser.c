@@ -32,6 +32,7 @@ Parser create_parser(Lexer *lexer) {
   return parser;
 }
 
+// TODO simplify and cleanup
 void parse_source(char *source) {
   printf("source -- \n%s \n", source);
 
@@ -45,5 +46,22 @@ void parse_source(char *source) {
 
   stmt = (struct Statement *)arena_alloc(&prog.arena, sizeof(struct Statement));
 
+  // parse statement parsed de juiste statement based on swithc case
+  // we beginnen met let statement
+  // let statement indentifier en expr
+  // parse_expression(precedence = LOWEST) begint met parsen van left expression
+  // indien op
+  // callen we parse_infix_expression indien precedence hoger is dan voorgaande
+  // en we geven de left expression mee aan de call in infixexpression asignen
+  // we left aan left en right is resultaat van parse expression(prec = prec
+  // CURRENT OP!!), waar we blijven infix aanroepen zolang prec hoger is dan de
+  // voorgaande. Belangrijk we blijven aan de rechter kant leaves aan de AST
+  // toevoegen zolang de precedence hoger is dan de voorgaande 1 + 3 * 6
+  // 	+
+  //   / \
+  // 1    *
+  //     / \
+  //     3  6
+  //
   // *stmt = parse_statement();
 }
