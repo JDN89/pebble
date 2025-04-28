@@ -1,5 +1,5 @@
-#ifndef pebble_parser_h
-#define pebble_parser_h
+#ifndef pebble_Parser_h
+#define pebble_Parser_h
 
 #include "lexer.h"
 
@@ -9,10 +9,10 @@ typedef struct {
   Token pt;
   char *errors[ERROR_SIZE];
   int errorCount;
-  Lexer lex;
-} parser;
+  Lexer *lexer;
+} Parser;
 
-parser create_parser(Lexer *lexer);
+Parser create_parser(Lexer *lexer);
 
 void parse_source(char *source);
 

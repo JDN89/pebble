@@ -12,14 +12,35 @@
 // TODO: create arena and add to the arena. What is the lifetime of the AST?
 void parse_retun_statement(Token token) {}
 
+Token advance(Lexer *lexer) { return nextToken(lexer); }
+
+Parser create_parser(Lexer *lexer) {
+
+  // Set all bytes of parser to zero (including pointers, integers, structs,
+  // arrays, etc.).
+  // Set ct and pt to zeroed Tokens.
+  // Set errors array to all NULL.
+  // Set errorCount to 0.
+  // Set lexer pointer to NULL initially.
+  Parser parser = {0};
+  parser.ct = advance(lexer);
+  parser.pt = advance(lexer);
+  parser.lexer = lexer;
+  return parser;
+}
+
 void parse_source(char *source) {
   printf("source -- \n%s \n", source);
 
-  Lexer lexer = initLexer(source);
+  // TODO creatProgram with storage of arena
+
+  // init lexer and create parser in main?
+  Lexer lexer = create_lexer(source);
+  Parser parser = create_parser(&lexer);
 
   for (;;) {
 
-    Token token = nextToken(&lexer);
+    Token token = parser.ct;
 
     switch (token.type) {
     case TOKEN_INTEGER:
@@ -39,6 +60,7 @@ void parse_source(char *source) {
     case TOKEN_SLASH: {
       printf("TODO report error; Read chapter error handling in book effective "
              "c. Or google it");
+      advance(Lexer * lexer)
     } break;
     case TOKEN_RETURN: {
       printf("token return");

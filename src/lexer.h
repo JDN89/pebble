@@ -51,7 +51,7 @@ typedef struct Lexer {
 
 char *tokenTypeToString(token_type type);
 
-Lexer initLexer(const char *source);
+Lexer create_lexer(const char *source);
 
 Token nextToken(Lexer *lexer);
 
