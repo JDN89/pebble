@@ -14,4 +14,4 @@ struct Program create_program() {
   arena_init(&arena, backing_buffer, ARENA_SIZE);
   program.arena = arena;
   return program;
-};
+}

@@ -15,7 +15,18 @@
 // TODO: create arena and add to the arena. What is the lifetime of the AST?
 void parse_retun_statement(Token token) {}
 
-Token advance(Lexer *lexer) { return nextToken(lexer); }
+void parse_statement(Parser parser) {
+  switch (parser.ct.type) {
+  case TOKEN_LET: {
+    printf("parse let staement");
+  } break;
+  default:
+    return;
+    break;
+  }
+}
+
+Token advance(Lexer *lexer) { return next_token(lexer); }
 
 Parser create_parser(Lexer *lexer) {
 
@@ -45,6 +56,7 @@ void parse_source(char *source) {
   struct Statement *stmt;
 
   stmt = (struct Statement *)arena_alloc(&prog.arena, sizeof(struct Statement));
+  parse_statement(parser);
 
   // parse statement parsed de juiste statement based on swithc case
   // we beginnen met let statement

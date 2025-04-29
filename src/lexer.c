@@ -48,7 +48,7 @@ char *tokenTypeToString(token_type type) {
 }
 
 // Consume and return character
-char advance(Lexer *lexer) {
+char next_char(Lexer *lexer) {
   lexer->current++;
   return lexer->current[-1];
 }
@@ -84,11 +84,11 @@ static void skipWhitespace(Lexer *lexer) {
     case ' ':
     case '\r':
     case '\t':
-      advance(lexer);
+      next_char(lexer);
       break;
     case '\n':
       lexer->line++;
-      advance(lexer);
+      next_char(lexer);
       break;
     default:
       return;
@@ -122,7 +122,7 @@ Lexer create_lexer(const char *source) {
   return lexer;
 }
 
-Token nextToken(Lexer *lexer) {
+Token next_token(Lexer *lexer) {
 
   // skip whitespaces, new lines
   skipWhitespace(lexer);
@@ -133,7 +133,7 @@ Token nextToken(Lexer *lexer) {
   if (isAtEnd(lexer)) {
     return makeToken(lexer, TOKEN_EOF);
   }
-  char c = advance(lexer);
+  char c = next_char(lexer);
   switch (c) {
   case '+':
     return makeToken(lexer, TOKEN_PLUS);
@@ -160,7 +160,7 @@ Token nextToken(Lexer *lexer) {
   default:
     if (isChar(c)) {
       while (isChar(peek(lexer))) {
-        advance(lexer);
+        next_char(lexer);
       }
       switch (lexer->start[0]) {
       case 'i':
@@ -182,7 +182,7 @@ Token nextToken(Lexer *lexer) {
     }
     if (isNumber(c)) {
       while (isNumber(peek(lexer))) {
-        advance(lexer);
+        next_char(lexer);
       }
       // NOTE: we switch on the start of the current token to see if it's an
       // identifer or a keyword
