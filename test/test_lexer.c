@@ -94,7 +94,7 @@ void testVariableDeclarations() {
   int counter = 0;
 
   for (;;) {
-    Token token = nextToken(&lexer);
+    Token token = next_token(&lexer);
 
     if (token.type != expectedTokens[counter]) {
       fprintf(stderr,
