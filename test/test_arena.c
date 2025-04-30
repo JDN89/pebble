@@ -58,7 +58,7 @@ void test_arena(void) {
   printf("test_arena -- PASSED\n");
 }
 
-int main() {
+int main(void) {
   test_arena();
   return 0;
 }

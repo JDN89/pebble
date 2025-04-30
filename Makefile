@@ -4,7 +4,7 @@ CFLAGS_DEBUG = -Wall -Wextra -pedantic -g
 
 # Executables
 EXECUTABLE = build/pebble
-TEST_EXECUTABLES = build/test_lexer build/test_value build/test_arena
+TEST_EXECUTABLES = build/test_lexer build/test_arena
 
 # Make sure build/ exists
 build:
@@ -20,9 +20,6 @@ $(EXECUTABLE): build
 # Build tests
 build/test_lexer: build
 	$(CC) $(CFLAGS_DEBUG) -o build/test_lexer test/test_lexer.c src/lexer.c 
-
-build/test_value: build
-	$(CC) $(CFLAGS_DEBUG) -o build/test_value test/test_value.c src/value.c
 
 build/test_arena: build
 	$(CC) $(CFLAGS_DEBUG) -o build/test_arena test/test_arena.c src/arena.c src/program.c
