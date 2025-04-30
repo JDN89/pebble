@@ -7,7 +7,7 @@
 #define ARENA_SIZE (64 * 1024) // 64 KB
 unsigned char backing_buffer[ARENA_SIZE];
 
-struct Program create_program() {
+struct Program create_program(void) {
   struct Program program = {0};
 
   struct Arena arena = {0};
@@ -20,7 +20,7 @@ void statement_array_init(struct StatementArray *arr) {
   arr->count = 0;
   arr->capacity = 4;
   arr->items = malloc(arr->capacity * sizeof(struct Statement *));
-};
+}
 
 void statement_array_push(struct StatementArray *arr, struct Statement *stmt) {
   if (arr->count >= arr->capacity) {

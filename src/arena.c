@@ -63,10 +63,6 @@ void *arena_alloc(struct Arena *a, size_t size) {
   return arena_alloc_align(a, size, DEFAULT_ALIGNMENT);
 }
 
-void arena_free(struct Arena *a, void *ptr) {
-  // Do nothing
-}
-
 void *arena_resize_align(struct Arena *a, void *old_memory, size_t old_size,
                          size_t new_size, size_t align) {
   assert(a != NULL);

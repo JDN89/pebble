@@ -29,7 +29,7 @@
 //   printf("test_parse_specific_token -- PASSED \n");
 // }
 
-void testVariableDeclarations() {
+void testVariableDeclarations(void) {
   char *source =
 
       " let a: int = 3 \n;"
@@ -113,7 +113,7 @@ void testVariableDeclarations() {
   printf("Typed mutable variable declarations test -- PASSED \n");
 }
 
-int main() {
+int main(void) {
   printf("START testing LEXER\n");
   // test_parse_specific_token();
   testVariableDeclarations();

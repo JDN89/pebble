@@ -19,6 +19,6 @@ void statement_array_init(struct StatementArray *arr);
 void statement_array_push(struct StatementArray *arr, struct Statement *stmt);
 void statement_array_free(struct StatementArray *arr);
 
-struct Program create_program();
+struct Program create_program(void);
 
 #endif

@@ -2,6 +2,7 @@
 #include "../src/ast.h"
 #include "../src/program.h"
 #include <assert.h>
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -21,7 +22,9 @@ void create_statement(int i, struct Statement *stmt) {
   stmt->as.return_stmt.expr = expr; // Point to the Expression
 }
 
-void test_arena() {
+void test_arena(void) {
+  printf("Start test_arena \n");
+
   struct Arena a = {0};
   arena_init(&a, test_backing_buffer, ARENA_SIZE);
 
@@ -44,7 +47,9 @@ void test_arena() {
     int val = AS_NUMBER(x.as.return_stmt.expr.as.val);
     assert(val == i);
     // TODO assert that addres is modulo fo 16 for cacha alignment
-    // uintptr_t ptr = &x;
+    uintptr_t ptr = (uintptr_t)stmts.items[i];
+    assert(ptr % 16 == 0);
+    printf("address %" PRIxPTR "\n", ptr);
   }
 
   // Cleanup

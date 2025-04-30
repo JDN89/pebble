@@ -53,9 +53,9 @@ void parse_source(char *source) {
   Lexer lexer = create_lexer(source);
   Parser parser = create_parser(&lexer);
   struct Program prog = create_program();
-  struct Statement *stmt;
 
-  stmt = (struct Statement *)arena_alloc(&prog.arena, sizeof(struct Statement));
+  struct Statement *stmt =
+      (struct Statement *)arena_alloc(&prog.arena, sizeof(struct Statement));
   parse_statement(parser);
 
   // parse statement parsed de juiste statement based on swithc case
