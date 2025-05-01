@@ -41,7 +41,7 @@ static char *readFile(const char *path) {
 
 static void runFile(const char *path) {
   char *source = readFile(path);
-  printf("source -- \n%s \n", source);
+  printf("main source -- \n%s \n", source);
   // TODO cleanup? we add parser en lexer here and pass it to parse source
   // instead of source?
   // Lexer lexer = create_lexer(source); Parser parser =

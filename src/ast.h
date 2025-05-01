@@ -31,15 +31,15 @@ struct ReturnStatement {
 };
 
 struct LetStatement {
-  Token identifier;
+  char *identifier;
   struct Expression expr;
 };
 
 struct Statement {
   enum StatementType type;
   union {
-    struct ReturnStatement return_stmt;
-    struct LetStatement let_stmt;
+    struct ReturnStatement *return_stmt;
+    struct LetStatement *let_stmt;
   } as;
 };
 

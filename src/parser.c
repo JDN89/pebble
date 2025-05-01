@@ -3,40 +3,50 @@
 #include "ast.h"
 #include "lexer.h"
 #include "program.h"
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
-// init parser and keep asking for tokens -> scanning for demand
+Token advance(Lexer *lexer) { return next_token(lexer); }
 
-/*void initParser(const char *source) {*/
-/*  printf("init parsser \n");*/
-/*  // advance 2 times to set current token and next token*/
-/*}*/
-
-// TODO: create arena and add to the arena. What is the lifetime of the AST?
 void parse_retun_statement(Token token) {}
 
-void parse_let_statement(Parser parser, const char *source) {
-  struct LetStatement LetStatement;
+struct LetStatement *parse_let_statement(Parser *parser, const char *source,
+                                         struct Arena *arena) {
+  struct LetStatement *letStatement =
+      arena_alloc(arena, sizeof(struct LetStatement));
+  assert(letStatement != NULL);
 
-  const char[parser.ct.length] identifier =
-      memcpy(identifier, source + parser.ct.offset, parser.ct.length);
+  char *identifier = arena_alloc(arena, parser->ct.length + 1);
+  assert(identifier != NULL);
+  memcpy(identifier, source + parser->ct.offset, parser->ct.length);
+  identifier[parser->ct.length] = '\0';
 
-  LetStatement.identifier = identifier;
+  letStatement->identifier = identifier;
+
+  // TODO parse value expression
+  return letStatement;
 }
 
-void parse_statement(Parser parser) {
-  switch (parser.ct.type) {
+struct Statement *parse_statement(Parser *parser, char *source,
+                                  struct Arena *arena) {
+  switch (parser->ct.type) {
   case TOKEN_LET: {
+
     printf("parse let staement");
+
+    advance(parser->lexer);
+    struct Statement *statement = arena_alloc(arena, sizeof(struct Statement));
+    statement->type = LET_STATMENT;
+    statement->as.let_stmt = parse_let_statement(parser, source, arena);
+    return statement;
   } break;
   default:
-    return;
+    // TODO fix or improve, if default shouldn't happy print to stderr
+    return NULL;
     break;
   }
 }
-
-Token advance(Lexer *lexer) { return next_token(lexer); }
 
 Parser create_parser(Lexer *lexer) {
 
@@ -55,7 +65,7 @@ Parser create_parser(Lexer *lexer) {
 
 // TODO simplify and cleanup
 void parse_source(char *source) {
-  printf("source -- \n%s \n", source);
+  printf("parser : source -- \n%s \n", source);
 
   // TODO creatProgram with storage of arena
 
@@ -63,10 +73,16 @@ void parse_source(char *source) {
   Lexer lexer = create_lexer(source);
   Parser parser = create_parser(&lexer);
   struct Program prog = create_program();
+  struct Statement *statement = parse_statement(&parser, source, prog.arena);
 
-  struct Statement *stmt =
-      (struct Statement *)arena_alloc(&prog.arena, sizeof(struct Statement));
-  parse_statement(parser, source);
+  struct StatementArray *statement_array;
+  statement_array_init(statement_array);
+  assert(statement_array != NULL);
+
+  statement_array_push(statement_array, statement);
+
+  printf("first identifier %s",
+         statement_array->items[0]->as.let_stmt->identifier);
 
   // parse statement parsed de juiste statement based on swithc case
   // we beginnen met let statement

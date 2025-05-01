@@ -12,10 +12,11 @@ struct Program create_program(void) {
 
   struct Arena arena = {0};
   arena_init(&arena, backing_buffer, ARENA_SIZE);
-  program.arena = arena;
+  program.arena = &arena;
   return program;
 }
 
+// TODO capacity is to small
 void statement_array_init(struct StatementArray *arr) {
   arr->count = 0;
   arr->capacity = 4;
