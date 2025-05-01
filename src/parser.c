@@ -4,6 +4,7 @@
 #include "lexer.h"
 #include "program.h"
 #include <stdio.h>
+#include <string.h>
 
 // init parser and keep asking for tokens -> scanning for demand
 
@@ -14,6 +15,15 @@
 
 // TODO: create arena and add to the arena. What is the lifetime of the AST?
 void parse_retun_statement(Token token) {}
+
+void parse_let_statement(Parser parser, const char *source) {
+  struct LetStatement LetStatement;
+
+  const char[parser.ct.length] identifier =
+      memcpy(identifier, source + parser.ct.offset, parser.ct.length);
+
+  LetStatement.identifier = identifier;
+}
 
 void parse_statement(Parser parser) {
   switch (parser.ct.type) {
@@ -56,7 +66,7 @@ void parse_source(char *source) {
 
   struct Statement *stmt =
       (struct Statement *)arena_alloc(&prog.arena, sizeof(struct Statement));
-  parse_statement(parser);
+  parse_statement(parser, source);
 
   // parse statement parsed de juiste statement based on swithc case
   // we beginnen met let statement
