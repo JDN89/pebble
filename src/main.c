@@ -1,6 +1,11 @@
+#include "arena.h"
 #include "parser.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+
+#define ARENA_SIZE (1024 * 1024)
+#define u_int8_t ARENA_BACKING_BUFFER[ARENA_SIZE]
 
 /*74 (EX_IOERR from <sysexits.h>) → File I/O error (e.g., cannot open/read a
  * file).*/
@@ -40,13 +45,21 @@ static char *readFile(const char *path) {
 }
 
 static void runFile(const char *path) {
-  char *source = readFile(path);
+  const char *source = readFile(path);
   printf("main source -- \n%s \n", source);
   // TODO cleanup? we add parser en lexer here and pass it to parse source
   // instead of source?
   // Lexer lexer = create_lexer(source); Parser parser =
   // create_parser(&lexer);
 
+  struct Arena arena = {0};
+
+  struct Lexer lexer = create_lexer(source);
+  struct Parser parser = create_parser(&lexer);
+
+  // TODO should I add the source to the head of the arena, YES add the source
+  // to the arena, Overwrite when you nog longer need it, avoids use of malloc
+  // and free. Just use arena for everything
   parse_source(source);
 
   free(source);

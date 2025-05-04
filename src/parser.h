@@ -12,15 +12,15 @@ enum precedence {
   PRODUCT,
 };
 
-typedef struct {
+struct Parser {
   Token ct;
   Token pt;
   char *errors[ERROR_SIZE];
   int errorCount;
   Lexer *lexer;
-} Parser;
+};
 
-Parser create_parser(Lexer *lexer);
+struct Parser create_parser(Lexer *lexer);
 
 void parse_source(char *source);
 

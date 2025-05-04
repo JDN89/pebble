@@ -6,10 +6,11 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 struct Arena {
-  unsigned char *buf;
+  u_int8_t *buf;
   size_t buf_len;
   size_t prev_offset; // This will be useful for later on
   size_t curr_offset;

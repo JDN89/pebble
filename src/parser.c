@@ -70,6 +70,10 @@ void parse_source(char *source) {
   // TODO creatProgram with storage of arena
 
   // init lexer and create parser in main?
+  // TODO rip out everything and place it in main > runfile
+  // core is the owner of the arena, and parser, lexer,... can use the arena
+  // creating program is not necessary because I have a dyn arr that contains
+  // the AST Statement pointers
   Lexer lexer = create_lexer(source);
   Parser parser = create_parser(&lexer);
   struct Program prog = create_program();
