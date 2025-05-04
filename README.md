@@ -47,6 +47,17 @@ Decided to stop basing on Oding language and switch to a subset of Monkey langua
 
 ## Learned
 - Arena and cache lining
+    - Initially, I defined the arena in program.c, but this caused issues since the arena needed to be accessed from parser.c and later from the typechecker as well. The core bug was that I hadn’t allocated the arena properly. By defining it in program.c, its lifetime wasn’t guaranteed throughout the entire compilation process. The first use case for the arena is to store parsed statements. Once they’re no longer needed, I can simply reset the arena and reuse the memory. To resolve the lifetime issue, I’m now defining the arena in main, ensuring it lives for the entire duration of the program — essentially, for the whole compilation of a Pebble program.
+    ``` C //OLD BUG
+    struct Program create_program(void) {
+    struct Program program = {0};
+
+    struct Arena arena = {0};
+    arena_init(&arena, backing_buffer, ARENA_SIZE);
+    program.arena = &arena;  // ❌ This is the bug
+    return program;
+}
+    ```
 - When arena is more usefule then (m)alloc
 - Why arrays are faster then objects that lie farther apart
 
