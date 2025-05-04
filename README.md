@@ -51,8 +51,12 @@ Decided to stop basing on Oding language and switch to a subset of Monkey langua
 - Why arrays are faster then objects that lie farther apart
 
 ## References
-[Crafting interpreters](https://craftinginterpreters.com/)
-[Writing an interpreter in go](https://interpreterbook.com/)
-[Voxelrift - I made a language for the Nintendo ds](https://www.youtube.com/watch?v=jMIj893JJBg&t=376s)
-[Voxelrift - arenas and strings](https://www.youtube.com/watch?v=3IAlJSIjvH0&t=114s)
+[Crafting interpreters](https://craftinginterpreters.com/) \
+[Writing an interpreter in go](https://interpreterbook.com/) \
+[Voxelrift - I made a language for the Nintendo ds](https://www.youtube.com/watch?v=jMIj893JJBg&t=376s) \
+[Voxelrift - arenas and strings](https://www.youtube.com/watch?v=3IAlJSIjvH0&t=114s) \
+[Untangling Lifetimes: The Arena Allocator](https://www.rfleury.com/p/untangling-lifetimes-the-arena-allocator) \
+[Untangling Lifetimes: The Arena Allocator](https://www.rfleury.com/p/untangling-lifetimes-the-arena-allocator) \
+[Memory allocation strategies](https://www.gingerbill.org/series/memory-allocation-strategies/)
+
 
