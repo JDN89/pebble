@@ -42,17 +42,17 @@ typedef struct {
   char *message;
 } ErrorToken;
 
-typedef struct Lexer {
+struct Lexer {
   const char *start;
   const char *current;
   const char *startOfSource;
   int line;
-} Lexer;
+};
 
 char *tokenTypeToString(token_type type);
 
-Lexer create_lexer(const char *source);
+struct Lexer create_lexer(const char *source);
 
-Token next_token(Lexer *lexer);
+Token next_token(struct Lexer *lexer);
 
 #endif

@@ -61,6 +61,9 @@ Decided to stop basing on Oding language and switch to a subset of Monkey langua
 - When arena is more usefule then (m)alloc
 - Why arrays are faster then objects that lie farther apart
 
+## Idomatic c
+I am writing C but is it idiomatic C? Read the Lua source code which is known to be clean and easy to understand. Also read the kilo text editor tutorial (1k line editor written in c)
+
 ## References
 [Crafting interpreters](https://craftinginterpreters.com/) \
 [Writing an interpreter in go](https://interpreterbook.com/) \

@@ -1,6 +1,7 @@
 #ifndef ARENA
 #define ARENA
 
+#include "ast.h"
 #include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -18,8 +19,10 @@ struct Arena {
 
 void *arena_alloc(struct Arena *a, size_t size);
 
-void arena_init(struct Arena *a, void *backing_buffer,
-                size_t backing_buffer_length);
+struct Statement *push_statement(struct Arena *a);
+
+void create_arena(struct Arena *a, void *backing_buffer,
+                  size_t backing_buffer_length);
 void arena_free_all(struct Arena *a);
 
 #endif

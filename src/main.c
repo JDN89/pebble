@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-#define ARENA_SIZE (1024 * 1024)
-#define u_int8_t ARENA_BACKING_BUFFER[ARENA_SIZE]
+#define ARENA_SIZE (1024 * 1024) // 1MB
+static u_int8_t ARENA_BACKING_BUFFER[ARENA_SIZE];
 
 /*74 (EX_IOERR from <sysexits.h>) → File I/O error (e.g., cannot open/read a
  * file).*/
@@ -15,7 +15,7 @@
 /*64 (EX_USAGE) → Incorrect command-line usage (e.g., wrong number of
  * arguments).*/
 
-static char *readFile(const char *path) {
+static char *readFile(const char *path, struct Arena *arena) {
   FILE *file = fopen(path, "rb");
   if (file == NULL) {
     fprintf(stderr, "Could not open file \"%s\".\n", path);
@@ -26,7 +26,7 @@ static char *readFile(const char *path) {
   size_t fileSize = ftell(file);
   rewind(file);
 
-  char *buffer = (char *)malloc(fileSize + 1);
+  char *buffer = (char *)arena_alloc(arena, fileSize + 1);
   if (buffer == NULL) {
     fprintf(stderr, "Not enough memory to read \"%s\".\n", path);
     exit(74);
@@ -45,14 +45,18 @@ static char *readFile(const char *path) {
 }
 
 static void runFile(const char *path) {
-  const char *source = readFile(path);
+  // Create Arena and use it for storing, source, AST,... The arena will live as
+  // long as the runFile scope. In this scope we will further call the
+  // typechecker, IR, Compiler
+  struct Arena arena = {0};
+  create_arena(&arena, ARENA_BACKING_BUFFER, ARENA_SIZE);
+
+  const char *source = readFile(path, &arena);
   printf("main source -- \n%s \n", source);
   // TODO cleanup? we add parser en lexer here and pass it to parse source
   // instead of source?
   // Lexer lexer = create_lexer(source); Parser parser =
   // create_parser(&lexer);
-
-  struct Arena arena = {0};
 
   struct Lexer lexer = create_lexer(source);
   struct Parser parser = create_parser(&lexer);
@@ -60,9 +64,8 @@ static void runFile(const char *path) {
   // TODO should I add the source to the head of the arena, YES add the source
   // to the arena, Overwrite when you nog longer need it, avoids use of malloc
   // and free. Just use arena for everything
-  parse_source(source);
+  parse_source(source, &arena, &parser);
 
-  free(source);
   // parse source
   /*InterpretResult result = interpret(source);*/
   /*free(source);*/

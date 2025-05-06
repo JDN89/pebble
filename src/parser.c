@@ -7,11 +7,13 @@
 #include <stdio.h>
 #include <string.h>
 
-Token advance(Lexer *lexer) { return next_token(lexer); }
+Token advance(struct Lexer *lexer) { return next_token(lexer); }
 
-void parse_retun_statement(Token token) {}
+void parse_retun_statement(Token token) { (void)token; }
 
-struct LetStatement *parse_let_statement(Parser *parser, const char *source,
+// TODO craete String value and use memcpy and memcmp
+struct LetStatement *parse_let_statement(struct Parser *parser,
+                                         const char *source,
                                          struct Arena *arena) {
   struct LetStatement *letStatement =
       arena_alloc(arena, sizeof(struct LetStatement));
@@ -28,7 +30,7 @@ struct LetStatement *parse_let_statement(Parser *parser, const char *source,
   return letStatement;
 }
 
-struct Statement *parse_statement(Parser *parser, char *source,
+struct Statement *parse_statement(struct Parser *parser, const char *source,
                                   struct Arena *arena) {
   switch (parser->ct.type) {
   case TOKEN_LET: {
@@ -48,7 +50,7 @@ struct Statement *parse_statement(Parser *parser, char *source,
   }
 }
 
-Parser create_parser(Lexer *lexer) {
+struct Parser create_parser(struct Lexer *lexer) {
 
   // Set all bytes of parser to zero (including pointers, integers, structs,
   // arrays, etc.).
@@ -56,7 +58,7 @@ Parser create_parser(Lexer *lexer) {
   // Set errors array to all NULL.
   // Set errorCount to 0.
   // Set lexer pointer to NULL initially.
-  Parser parser = {0};
+  struct Parser parser = {0};
   parser.ct = advance(lexer);
   parser.pt = advance(lexer);
   parser.lexer = lexer;
@@ -64,7 +66,8 @@ Parser create_parser(Lexer *lexer) {
 }
 
 // TODO simplify and cleanup
-void parse_source(char *source) {
+void parse_source(const char *source, struct Arena *arena,
+                  struct Parser *parser) {
   printf("parser : source -- \n%s \n", source);
 
   // TODO creatProgram with storage of arena
@@ -74,19 +77,18 @@ void parse_source(char *source) {
   // core is the owner of the arena, and parser, lexer,... can use the arena
   // creating program is not necessary because I have a dyn arr that contains
   // the AST Statement pointers
-  Lexer lexer = create_lexer(source);
-  Parser parser = create_parser(&lexer);
-  struct Program prog = create_program();
-  struct Statement *statement = parse_statement(&parser, source, prog.arena);
+  struct Statement *statement = parse_statement(parser, source, arena);
 
+  // push statement_array on the arena?
   struct StatementArray *statement_array;
   statement_array_init(statement_array);
   assert(statement_array != NULL);
 
-  statement_array_push(statement_array, statement);
+  // statement_array_push(statement_array, statement);
 
   printf("first identifier %s",
          statement_array->items[0]->as.let_stmt->identifier);
+  return;
 
   // parse statement parsed de juiste statement based on swithc case
   // we beginnen met let statement

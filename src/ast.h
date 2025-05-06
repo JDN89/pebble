@@ -27,12 +27,12 @@ enum StatementType { RETURN_STATEMENT, LET_STATMENT };
 
 struct ReturnStatement {
   token_type type;
-  struct Expression expr;
+  struct Expression *expr;
 };
 
 struct LetStatement {
   char *identifier;
-  struct Expression expr;
+  struct Expression *expr;
 };
 
 struct Statement {

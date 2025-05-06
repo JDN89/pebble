@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = clang
-CFLAGS_DEBUG = -Wall -Wextra -pedantic -g
+CFLAGS_DEBUG = -Wall -Wextra -Werror -pedantic -g
 
 # Executables
 EXECUTABLE = build/pebble

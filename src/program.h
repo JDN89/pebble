@@ -6,9 +6,6 @@
 
 // The arena will contain statements, but how do I keep track to the beginning
 // of each statement? Store the pointers to the statements in dynamic array?
-struct Program {
-  struct Arena *arena;
-};
 
 struct StatementArray {
   struct Statement **items;
@@ -18,7 +15,5 @@ struct StatementArray {
 void statement_array_init(struct StatementArray *arr);
 void statement_array_push(struct StatementArray *arr, struct Statement *stmt);
 void statement_array_free(struct StatementArray *arr);
-
-struct Program create_program(void);
 
 #endif

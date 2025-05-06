@@ -1,4 +1,5 @@
 #include "arena.h"
+#include "ast.h"
 #include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -30,8 +31,8 @@ uintptr_t align_forward(uintptr_t ptr, size_t align) {
 #define DEFAULT_ALIGNMENT (2 * sizeof(void *))
 #endif
 
-void arena_init(struct Arena *a, void *backing_buffer,
-                size_t backing_buffer_length) {
+void create_arena(struct Arena *a, void *backing_buffer,
+                  size_t backing_buffer_length) {
   a->buf = (unsigned char *)backing_buffer;
   a->buf_len = backing_buffer_length;
   a->curr_offset = 0;
@@ -61,6 +62,10 @@ void *arena_alloc_align(struct Arena *a, size_t size, size_t align) {
 // Because C doesn't have default parameters
 void *arena_alloc(struct Arena *a, size_t size) {
   return arena_alloc_align(a, size, DEFAULT_ALIGNMENT);
+}
+
+struct Statement *push_statement(struct Arena *a) {
+  return arena_alloc_align(a, sizeof(struct Statement), DEFAULT_ALIGNMENT);
 }
 
 void *arena_resize_align(struct Arena *a, void *old_memory, size_t old_size,

@@ -2,7 +2,7 @@
 #include "stdbool.h"
 #include <string.h>
 
-static Token makeToken(Lexer *lexer, token_type type);
+static Token makeToken(struct Lexer *lexer, token_type type);
 
 char *tokenTypeToString(token_type type) {
   switch (type) {
@@ -48,14 +48,14 @@ char *tokenTypeToString(token_type type) {
 }
 
 // Consume and return character
-char next_char(Lexer *lexer) {
+char next_char(struct Lexer *lexer) {
   lexer->current++;
   return lexer->current[-1];
 }
 
-char peek(Lexer *lexer) { return lexer->current[0]; }
+char peek(struct Lexer *lexer) { return lexer->current[0]; }
 
-bool isAtEnd(Lexer *lexer) { return *lexer->current == '\0'; }
+bool isAtEnd(struct Lexer *lexer) { return *lexer->current == '\0'; }
 
 // TODO: this method will get called a lot. See there is any wiggle room for
 // optimization Look at lua or tinyCC compiler for exmaples or inspiration
@@ -69,7 +69,7 @@ bool isNumber(char c) { return ('0' <= c && c <= '9'); }
 
 // TODO: this method will get called a lot. See there is any wiggle room for
 // optimization
-Token checkKeyword(Lexer *lexer, token_type type, const char *keyword) {
+Token checkKeyword(struct Lexer *lexer, token_type type, const char *keyword) {
   if (memcmp(lexer->start, keyword, lexer->current - lexer->start) == 0) {
     return makeToken(lexer, type);
   } else {
@@ -77,7 +77,7 @@ Token checkKeyword(Lexer *lexer, token_type type, const char *keyword) {
   }
 }
 
-static void skipWhitespace(Lexer *lexer) {
+static void skipWhitespace(struct Lexer *lexer) {
   for (;;) {
     char c = peek(lexer);
     switch (c) {
@@ -95,7 +95,7 @@ static void skipWhitespace(Lexer *lexer) {
     }
   }
 }
-Token makeToken(Lexer *lexer, token_type type) {
+Token makeToken(struct Lexer *lexer, token_type type) {
   Token token = {0};
   token.offset = lexer->start - lexer->startOfSource;
   token.length = lexer->current - lexer->start;
@@ -104,7 +104,7 @@ Token makeToken(Lexer *lexer, token_type type) {
   return token;
 }
 
-Token makeErrorToken(Lexer *lexer) {
+Token makeErrorToken(struct Lexer *lexer) {
   Token token = {0};
   token.offset = lexer->start - lexer->startOfSource;
   token.length = lexer->current - lexer->start;
@@ -113,8 +113,8 @@ Token makeErrorToken(Lexer *lexer) {
   return token;
 }
 
-Lexer create_lexer(const char *source) {
-  Lexer lexer = {0};
+struct Lexer create_lexer(const char *source) {
+  struct Lexer lexer = {0};
   lexer.startOfSource = source;
   lexer.start = source;
   lexer.current = source;
@@ -122,7 +122,7 @@ Lexer create_lexer(const char *source) {
   return lexer;
 }
 
-Token next_token(Lexer *lexer) {
+Token next_token(struct Lexer *lexer) {
 
   // skip whitespaces, new lines
   skipWhitespace(lexer);

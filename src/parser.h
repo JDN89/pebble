@@ -5,6 +5,8 @@
 
 #define ERROR_SIZE 256
 
+struct Arena;
+
 enum precedence {
   LOWEST,
   EQUALS,
@@ -17,11 +19,12 @@ struct Parser {
   Token pt;
   char *errors[ERROR_SIZE];
   int errorCount;
-  Lexer *lexer;
+  struct Lexer *lexer;
 };
 
-struct Parser create_parser(Lexer *lexer);
+struct Parser create_parser(struct Lexer *lexer);
 
-void parse_source(char *source);
+void parse_source(const char *source, struct Arena *arena,
+                  struct Parser *parser);
 
 #endif
