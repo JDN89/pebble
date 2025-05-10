@@ -10,6 +10,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+// TODO: Jan mmap arena so it no longer lives on the stack
+// keep buf
+// add size
+// add used
+// clean out the rest because not using for now. Use simple arena and change
+// later if needed
 struct Arena {
   u_int8_t *buf;
   size_t buf_len;
