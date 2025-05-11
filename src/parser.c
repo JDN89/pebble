@@ -13,8 +13,7 @@ void parse_retun_statement(Token token) { (void)token; }
 
 // TODO craete String value and use memcpy and memcmp
 struct LetStatement *parse_let_statement(struct Parser *parser,
-                                         const char *source,
-                                         struct Arena *arena) {
+                                         const char *source, Arena *arena) {
   struct LetStatement *letStatement =
       arena_alloc(arena, sizeof(struct LetStatement));
   assert(letStatement != NULL);
@@ -30,15 +29,15 @@ struct LetStatement *parse_let_statement(struct Parser *parser,
   return letStatement;
 }
 
-struct Statement *parse_statement(struct Parser *parser, const char *source,
-                                  struct Arena *arena) {
+Statement *parse_statement(struct Parser *parser, const char *source,
+                           Arena *arena) {
   switch (parser->ct.type) {
   case TOKEN_LET: {
 
     printf("parse let staement");
 
     advance(parser->lexer);
-    struct Statement *statement = arena_alloc(arena, sizeof(struct Statement));
+    Statement *statement = arena_alloc(arena, sizeof(Statement));
     statement->type = LET_STATMENT;
     statement->as.let_stmt = parse_let_statement(parser, source, arena);
     return statement;
@@ -66,8 +65,7 @@ struct Parser create_parser(struct Lexer *lexer) {
 }
 
 // TODO simplify and cleanup
-void parse_source(const char *source, struct Arena *arena,
-                  struct Parser *parser) {
+void parse_source(const char *source, Arena *arena, struct Parser *parser) {
   printf("parser : source -- \n%s \n", source);
 
   // TODO creatProgram with storage of arena
@@ -77,10 +75,10 @@ void parse_source(const char *source, struct Arena *arena,
   // core is the owner of the arena, and parser, lexer,... can use the arena
   // creating program is not necessary because I have a dyn arr that contains
   // the AST Statement pointers
-  struct Statement *statement = parse_statement(parser, source, arena);
+  Statement *statement = parse_statement(parser, source, arena);
 
   // push statement_array on the arena?
-  struct StatementArray *statement_array;
+  StatementArray *statement_array;
   statement_array_init(statement_array);
   assert(statement_array != NULL);
 
@@ -93,14 +91,14 @@ void parse_source(const char *source, struct Arena *arena,
   // parse statement parsed de juiste statement based on swithc case
   // we beginnen met let statement
   // let statement indentifier en expr
-  // parse_expression(precedence = LOWEST) begint met parsen van left expression
+  // parse_expression(Precedence = LOWEST) begint met parsen van left expression
   // indien op
-  // callen we parse_infix_expression indien precedence hoger is dan voorgaande
+  // callen we parse_infix_expression indien Precedence hoger is dan voorgaande
   // en we geven de left expression mee aan de call in infixexpression asignen
   // we left aan left en right is resultaat van parse expression(prec = prec
   // CURRENT OP!!), waar we blijven infix aanroepen zolang prec hoger is dan de
   // voorgaande. Belangrijk we blijven aan de rechter kant leaves aan de AST
-  // toevoegen zolang de precedence hoger is dan de voorgaande 1 + 3 * 6
+  // toevoegen zolang de Precedence hoger is dan de voorgaande 1 + 3 * 6
   // 	+
   //   / \
   // 1    *

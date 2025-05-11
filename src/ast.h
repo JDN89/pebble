@@ -35,12 +35,12 @@ struct LetStatement {
   struct Expression *expr;
 };
 
-struct Statement {
+typedef struct {
   enum StatementType type;
   union {
     struct ReturnStatement *return_stmt;
     struct LetStatement *let_stmt;
   } as;
-};
+} Statement;
 
 #endif

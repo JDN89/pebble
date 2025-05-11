@@ -52,7 +52,7 @@ Decided to stop basing on Oding language and switch to a subset of Monkey langua
     struct Program create_program(void) {
     struct Program program = {0};
 
-    struct Arena arena = {0};
+    Arena arena = {0};
     arena_init(&arena, backing_buffer, ARENA_SIZE);
     program.arena = &arena;  // ❌ This is the bug
     return program;

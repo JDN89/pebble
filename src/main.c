@@ -15,7 +15,7 @@ static u_int8_t ARENA_BACKING_BUFFER[ARENA_SIZE];
 /*64 (EX_USAGE) → Incorrect command-line usage (e.g., wrong number of
  * arguments).*/
 
-static char *readFile(const char *path, struct Arena *arena) {
+static char *readFile(const char *path, Arena *arena) {
   FILE *file = fopen(path, "rb");
   if (file == NULL) {
     fprintf(stderr, "Could not open file \"%s\".\n", path);
@@ -48,7 +48,7 @@ static void runFile(const char *path) {
   // Create Arena and use it for storing, source, AST,... The arena will live as
   // long as the runFile scope. In this scope we will further call the
   // typechecker, IR, Compiler
-  struct Arena arena = {0};
+  Arena arena = {0};
   create_arena(&arena, ARENA_BACKING_BUFFER, ARENA_SIZE);
 
   const char *source = readFile(path, &arena);

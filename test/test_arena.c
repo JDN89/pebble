@@ -9,16 +9,15 @@
 #define ARENA_SIZE (64 * 1024)
 unsigned char test_backing_buffer[ARENA_SIZE];
 
-void create_statement(int i, struct Statement *stmt, struct Arena *a) {
+void create_statement(int i, Statement *stmt, Arena *a) {
   assert(stmt != NULL);
 
   // Allocate memory for the return statement in the arena
-  struct ReturnStatement *return_stmt =
-      arena_alloc(a, sizeof(struct ReturnStatement));
+  struct ReturnStatement *return_stmt = arena_push(a, struct ReturnStatement);
   assert(return_stmt != NULL);
 
   // Allocate the expression and initialize it
-  struct Expression *expr = arena_alloc(a, sizeof(struct Expression));
+  struct Expression *expr = arena_push(a, struct Expression);
   assert(expr != NULL);
 
   expr->type = NUMBER_EXPRESSION;
@@ -35,17 +34,16 @@ void create_statement(int i, struct Statement *stmt, struct Arena *a) {
 void test_arena(void) {
   printf("Start test_arena \n");
 
-  struct Arena a = {0};
-  create_arena(&a, test_backing_buffer, ARENA_SIZE);
+  Arena a = {0};
+  arena_alloc(&a, ARENA_SIZE);
 
-  struct StatementArray stmts;
+  StatementArray stmts;
   statement_array_init(&stmts); // Initialize dynamic array
 
   // Allocate space for a Statement in the arena
 
   for (int i = 0; i < 4; i++) {
-    struct Statement *stmt =
-        (struct Statement *)arena_alloc(&a, sizeof(struct Statement));
+    Statement *stmt = (Statement *)arena_alloc(&a, sizeof(Statement));
 
     create_statement(i, stmt, &a);
     // Push statement to dynamic array
@@ -53,7 +51,7 @@ void test_arena(void) {
   }
 
   for (int i = 0; i < 4; i++) {
-    struct Statement x = *stmts.items[i];
+    Statement x = *stmts.items[i];
     int val = AS_NUMBER(x.as.return_stmt->expr->as.val);
     assert(val == i);
     // TODO assert that addres is modulo fo 16 for cacha alignment

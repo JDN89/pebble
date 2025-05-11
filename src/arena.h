@@ -9,26 +9,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 
-// TODO: Jan mmap arena so it no longer lives on the stack
-// keep buf
-// add size
-// add used
-// clean out the rest because not using for now. Use simple arena and change
-// later if needed
-struct Arena {
-  u_int8_t *buf;
-  size_t buf_len;
-  size_t prev_offset; // This will be useful for later on
-  size_t curr_offset;
-};
+#define arena_push(arena, type) (type *)push_size_((arena), sizeof(type))
+#define push_array(arena, type, amount) push_size_(arena, sizeof(type) * amount)
+#define AlignPow2(x, b) (((x) + (b) - 1) & ~((b) - 1))
 
-void *arena_alloc(struct Arena *a, size_t size);
+typedef struct {
+  u_int8_t *buf; // u_int8_t so we can move over the buffer one byte at the time
+  u_int64_t size;
+  u_int64_t used;
+} Arena;
 
-struct Statement *push_statement(struct Arena *a);
+Arena *arena_alloc(Arena *a, size_t size);
 
-void create_arena(struct Arena *a, void *backing_buffer,
-                  size_t backing_buffer_length);
-void arena_free_all(struct Arena *a);
+void free_arena(Arena *a);
+
+void *push_size_(Arena *a, size_t size);
+
+void create_arena(Arena *a, void *backing_buffer, size_t backing_buffer_length);
+void arena_free_all(Arena *a);
 
 #endif
